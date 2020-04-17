@@ -2,10 +2,10 @@
 04/17/2020
 
 ### Project Title
-Replace the Project Title
+Bike Share
 
 ### Description
-Describe what your project is about and what it does
+Data analysis of bike share data for Chicago, New York, and Washington
 
 ### Files used
 Include the files used
