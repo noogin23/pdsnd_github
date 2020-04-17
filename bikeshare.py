@@ -2,9 +2,9 @@ import time
 import pandas as pd
 import numpy as np
 
-CITY_DATA = { 'chicago': 'chicago.csv',
-              'new york city': 'new_york_city.csv',
-              'washington': 'washington.csv' }
+CITY_DATA = { 'chicago': 'csv/chicago.csv',
+              'new york city': 'csv/new_york_city.csv',
+              'washington': 'csv/washington.csv' }
 
 def get_filters():
     """
@@ -22,18 +22,18 @@ def get_filters():
     while city not in city_list:
         city = input("Please input a correct city (i.e. chicago, new york city, washington): ").lower()
     print('-'*40)
-    
+
     # TO DO: get user input for month (all, january, february, ... , june)
     month = input("Which of the month between january and jure are you interested in (i.e. all, january, february, ..., june): ").lower()
     month_list = ["all", "january", "february", "march", "april", "may", "june"]
     while month not in month_list:
         month = input("Please input a correct month (i.e. all, january, february, ..., june): ").lower()
     print('-'*40)
-    
+
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
     day = input("Which day of the week are you interested in (i.e. all, monday, tuesday, ..., sunday): ").lower()
     day_list = ["all","monday","tuesday","wednesday", "thursday", "friday", "saturday", "sunday"]
-    while day not in day_list:           
+    while day not in day_list:
         day = input("Please input a correct day (i.e. all, monday, tuesday, ..., sunday): ").lower()
     print('-'*40)
     print("city: {}, month: {}, day: {}".format(city,month,day))
@@ -56,15 +56,15 @@ def load_data(city, month, day):
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['month'] = df['Start Time'].dt.month
     df['day_of_week'] = df['Start Time'].dt.weekday_name
-    
-    # filter by month if applicable   
+
+    # filter by month if applicable
     if month != 'all':
         # use the index of the months list to get the corresponding int
         months = ['january', 'february', 'march', 'april', 'may', 'june']
         month = months.index(month) + 1
         # filter by month to create the new dataframe
         df = df[df['month'] == month]
-        
+
     # filter by day of week if applicable
     if day != 'all':
         # filter by day of week to create the new dataframe
@@ -81,16 +81,16 @@ def time_stats(df):
 
     # TO DO: display the most common month
     common_month = df['month'].mode()[0]
-    print (common_month)
-    
+    print ('\nThe most common month: ',common_month)
+
     # TO DO: display the most common day of week
     common_day = df['day_of_week'].mode()[0]
-    print (common_day)
+    print ('\nThe most common day of week: ',common_day)
 
     # TO DO: display the most common start hour
     df['hour'] = df['Start Time'].dt.hour
     common_hour = df['hour'].mode()[0]
-    print (common_hour)
+    print ('\nThe most common start hour: ',common_hour)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -155,40 +155,40 @@ def user_stats(df):
         print(gender_types)
     except KeyError:
         print('\nNo Gender Data Available')
-        
+
     # TO DO: Display earliest, most recent, and most common year of birth
     try:
         print ('Earliest birth year: ', int(df['Birth Year'].min()))
         print ('Most Recent birth year: ',int(df['Birth Year'].max()))
         print ('Most Common birth year: ', int(df['Birth Year'].mode()[0]))
     except KeyError:
-        print('\nNo Birth Data Available')   
-        
+        print('\nNo Birth Data Available')
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 def display_raw_data(df):
     """Displaying filtered raw data"""
-    
+
     #Code to display raw filtered data 5 rows at a time
-    n = 0 #inititating row variable 
+    n = 0 #inititating row variable
     view_data = input('\nWould you like to see the raw data? Enter Yes or No.\n').lower()
     while view_data == 'yes':
         print(df.loc[n:n+4])
         view_data = input('\nWould you like to see more data? Enter Yes or No.\n').lower()
         if view_data == 'yes':
             n += 5
-    
+
     start_time = time.time()
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-    
+
 def main():
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
-        
+
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
@@ -197,6 +197,7 @@ def main():
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
+            print("\nThank You for using this progam")
             break
 
 
